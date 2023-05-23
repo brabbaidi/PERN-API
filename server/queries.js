@@ -12,8 +12,20 @@ const pool = new POOL({
 
 // Create  all the functions that will be our request handlers in our express server
 
-// Get all the data from db
- 
+// Create method
+const createLinks = (req, res) =>{
+    //take the data the user passes us and insert it into our table
+    const name = request.body.name
+    const URL = request.body.URL
+    pool.query('INSERT INTO links (name, URL) VALUES (41, $2)', [name, URL], (error, result)=>{
+        if(error){
+            throw error
+        }
+        response.status(201).send(`Link added with ID: ${result.insertId}`)
+    })
+}
+
+// Get back all the data currently in the dadabase 
 const getLinks = (req, res) => {
     pool.query('SELECT * FROM links ORDER BY id ASC', (error, result)=>{
         if(error){
@@ -26,4 +38,5 @@ const getLinks = (req, res) => {
 
 module.exports = {
     getLinks,
+    createLinks
 }

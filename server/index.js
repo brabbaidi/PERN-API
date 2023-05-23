@@ -10,10 +10,11 @@ const { Pool } = require('pg');
 
 const db = require('./queries')
 
-const PORT = 9001
+const PORT = 8000// used port 9001 in the previous folder
 
 //Middleware
-
+app.use(express.json())
+app.use(express.urlencoded({ extended: true}))
 
 //host react app as static files
 app.use(express.static(path.resolve(__dirname, '../client/build')))
@@ -79,6 +80,7 @@ app.delete('/links/:id', async (req, res) => {
   
 
 app.get('/links', db.getLinks)
+app.post('/new', db.createLinks)
 
 app.use(bodyParser.json());
 
